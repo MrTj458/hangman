@@ -5,11 +5,11 @@ const props = defineProps(["stage"]);
 <template>
   <div class="hangman">
     <div class="bar"></div>
-    <div class="rope"></div>
     <div class="pole"></div>
     <div class="base"></div>
 
-    <div class="person">
+    <div class="swinging">
+      <div class="rope"></div>
       <div v-if="props.stage <= 5" class="head"></div>
       <div v-if="props.stage <= 3" class="left-arm"></div>
       <div v-if="props.stage <= 4" class="body"></div>
@@ -45,51 +45,48 @@ const props = defineProps(["stage"]);
   background-color: var(--text-color);
 }
 
-.rope {
-  height: 50px;
-  width: 4px;
-  background-color: var(--text-color);
-  position: absolute;
-  top: 4px;
-  left: calc(50% - 2px);
-}
-
-.person {
+.swinging {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  /* animation: sway linear 2s infinite; */
+  transform-origin: 50% 0;
+  animation: sway ease-in-out 4s infinite;
+}
+
+.swinging div {
+  border-radius: 2px;
 }
 
 @keyframes sway {
   0% {
-    transform: rotateZ(0deg);
-  }
-
-  25% {
-    transform: rotateZ(10deg);
+    transform: rotateZ(5deg);
   }
 
   50% {
-    transform: rotateZ(0deg);
-  }
-
-  75% {
-    transform: rotateZ(-10deg);
+    transform: rotateZ(-5deg);
   }
 
   100% {
-    transform: rotateZ(0deg);
+    transform: rotateZ(5deg);
   }
+}
+
+.rope {
+  height: 50px;
+  width: 4px;
+  background-color: var(--text-color);
+  position: absolute;
+  top: 2px;
+  left: calc(50% - 2px);
 }
 
 .head {
   width: 50px;
   height: 50px;
   border: 4px solid var(--text-color);
-  border-radius: 50%;
+  border-radius: 50% !important;
   position: absolute;
   top: 50px;
   left: 50%;
@@ -121,7 +118,7 @@ const props = defineProps(["stage"]);
   width: 4px;
   height: 100px;
   background-color: var(--text-color);
-  top: 100px;
+  top: 98px;
   left: calc(50% - 2px);
 }
 
